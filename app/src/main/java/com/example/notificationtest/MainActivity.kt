@@ -9,12 +9,14 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.app.NotificationCompat
+import androidx.core.app.RemoteInput
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     private val channelID = "com.example.notificationtest.channel1"
     private var notificationManager: NotificationManager? = null;
+    private val KEY_REPLY = "key_reply"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         val notifivationId = 45
 
+        //action after click on notification
         val tapResultIntent = Intent(this, SecondActivity::class.java).apply {
 //            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
 
@@ -44,6 +47,20 @@ class MainActivity : AppCompatActivity() {
             tapResultIntent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
+
+
+        //reply action
+        val remoteInput: RemoteInput = RemoteInput.Builder(KEY_REPLY).run{
+            setLabel("Insert your name here")
+            build()
+        }
+
+        val replyAction: NotificationCompat.Action = NotificationCompat.Action.Builder(
+            0,
+            "reply",
+            pendingIntent
+        ).addRemoteInput(remoteInput)
+            .build()
 
         //action button detail
         val toDetailsIntent = Intent(this, DetailsActivity::class.java)
@@ -84,6 +101,7 @@ class MainActivity : AppCompatActivity() {
             .setContentIntent(pendingIntent)
             .addAction(toDetailAction)
             .addAction(toSettingsAction)
+            .addAction(replyAction)
             .build()
 
         notificationManager?.notify(notifivationId, notification)
