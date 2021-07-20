@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -91,11 +92,22 @@ class MainActivity : AppCompatActivity() {
             NotificationCompat.Action.Builder(0, "Settings", toSettingsPendingIntent).build()
 
 
-        //
+        //notifitcation image
+        val bitmap = BitmapFactory.decodeResource(applicationContext.resources, android.R.drawable.alert_dark_frame)
+        val bitmapLargeIcon = BitmapFactory.decodeResource(applicationContext.resources, android.R.drawable.alert_dark_frame)
+
+
+        //notification
         val notification = NotificationCompat.Builder(this@MainActivity, channelID)
             .setContentTitle("Demo Title")
             .setContentTitle("This is a demo notification")
-            .setSmallIcon(android.R.drawable.ic_dialog_info)
+            .setSmallIcon(android.R.drawable.btn_plus)
+            .setLargeIcon(bitmapLargeIcon)
+            .setStyle(NotificationCompat.BigPictureStyle()
+                .bigPicture(bitmap)
+                .setSummaryText("Summary Text")
+                .setBigContentTitle("Big Content Title")
+                .bigLargeIcon(null))
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
