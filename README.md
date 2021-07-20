@@ -2,5 +2,6 @@
 Different examples of notifications on android using kotlin
 
 Sources:
-https://www.youtube.com/watch?v=qzk5Vg31g7A
-https://www.youtube.com/watch?v=B5dgmvbrHgs
+
+* https://www.youtube.com/watch?v=qzk5Vg31g7A...
+* https://www.youtube.com/watch?v=B5dgmvbrHgs
